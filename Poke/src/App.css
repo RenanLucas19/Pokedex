@@ -1,42 +1,49 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+/* src/App.css */
+
+/* Fundo para a página inteira */
+body {
+  background-color: #333; /* Cor suave de fundo */
+  background-image: url('https://example.com/fundo-imagem.jpg'); /* Imagem de fundo */
+  background-size: cover; /* Faz a imagem cobrir toda a tela */
+  background-position: center center; /* Centraliza a imagem */
+  font-family: Arial, sans-serif; /* Fonte para a página */
+  margin: 0;
+  padding: 0;
+}
+
+/* Estilos do título principal */
+h1 {
   text-align: center;
+  font-size: 3rem;
+  color: #ffffff;
+  margin-top: 20px;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.pokemon-card {
+  border: 1px solid #ffffff;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 10px;
+  text-align: center;
+  width: 150px;
+  transition: transform 0.2s;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.pokemon-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(151, 117, 117, 0.2);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.pokemon-details {
+  background: #333;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
 }
 
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+h3 {
+  font-size: 1rem;
+  margin-top: 10px;
 }
