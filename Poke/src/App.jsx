@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import './App.css'; // Certifique-se de ter um estilo básico
+import './App.css'; // Certifique-se de ter este arquivo CSS
 
 function App() {
   const [pokemon, setPokemon] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredPokemon, setFilteredPokemon] = useState([]);
   const [selectedPokemon, setSelectedPokemon] = useState(null);
 
   useEffect(() => {
@@ -10,14 +12,41 @@ function App() {
       const response = await fetch("https://pokeapi.co/api/v2/pokemon/?limit=1000");
       const data = await response.json();
       setPokemon(data.results);
+      setFilteredPokemon(data.results); // Inicializa a lista filtrada com todos os Pokémon
     };
 
     fetchPokemon();
   }, []);
 
+  useEffect(() => {
+    const filtered = pokemon.filter((poke) =>
+      poke.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredPokemon(filtered);
+  }, [searchTerm, pokemon]);
+
   return (
     <div>
       <h1>Pokédex</h1>
+      {/* Barra de pesquisa abaixo do título */}
+      <div style={{ marginTop: '20px' }}>
+        <input
+          type="text"
+          placeholder="Pesquisar Pokémon..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          style={{
+            margin: '10px 0',
+            padding: '8px 12px', // Tamanho menor
+            width: '300px', // Define uma largura fixa
+            fontSize: '14px',
+            borderRadius: '20px', // Bordas redondas
+            border: '1px solid #ccc', // Adiciona uma borda cinza
+            outline: 'none', // Remove o contorno azul ao focar
+            boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)', // Adiciona um leve sombreamento
+          }}
+        />
+      </div>
       {selectedPokemon && (
         <PokemonDetails 
           pokemonUrl={selectedPokemon} 
@@ -27,7 +56,7 @@ function App() {
       <div>
         <h2>Lista de Pokémons</h2>
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-          {pokemon.map((poke) => (
+          {filteredPokemon.map((poke) => (
             <PokemonCard 
               key={poke.name} 
               pokemonUrl={poke.url} 
@@ -64,6 +93,13 @@ function PokemonCard({ pokemonUrl, onClick }) {
         alt={pokemonData.name} 
       />
       <h3>{pokemonData.name.charAt(0).toUpperCase() + pokemonData.name.slice(1)}</h3>
+      <div className="types">
+        {pokemonData.types.map((type) => (
+          <span key={type.type.name} className={`type ${type.type.name}`}>
+            {type.type.name.charAt(0).toUpperCase() + type.type.name.slice(1)}
+          </span>
+        ))}
+      </div>
     </div>
   );
 }
